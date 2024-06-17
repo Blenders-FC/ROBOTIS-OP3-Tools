@@ -274,8 +274,9 @@ bool ActionEditor::initializeActionEditor(std::string robot_file_path, std::stri
 
   //Initialize Publisher
   ros::NodeHandle nh;
-  enable_ctrl_module_pub_ = nh.advertise<std_msgs::String>("/robotis/enable_ctrl_module", 0);
-  play_sound_pub_ = nh.advertise<std_msgs::String>("/play_sound_file", 0);
+  ros_node.param<int>("robot_id", robot_id, 0);
+  enable_ctrl_module_pub_ = nh.advertise<std_msgs::String>("/robotis_" + std::to_string(robot_id) + "enable_ctrl_module", 0);
+  play_sound_pub_ = nh.advertise<std_msgs::String>("/robotis_" + std::to_string(robot_id) + "/play_sound_file", 0);
 
   //Initialize Member variable
   for (std::map<std::string, robotis_framework::Dynamixel*>::iterator it = robot_->dxls_.begin();
