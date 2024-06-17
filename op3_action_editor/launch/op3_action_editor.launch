@@ -9,8 +9,12 @@
   <param name ="action_file_path"        value="$(find op3_action_module)/data/motion_4095.bin"/>
     
   <!-- Action Editor -->
-  <node pkg="op3_action_editor" type="op3_action_editor" name="op3_action_editor" output="screen"/>
+  <node pkg="op3_action_editor" type="op3_action_editor" name="op3_action_editor" output="screen">
+    <param name="robot_id"                 value="1"/>
+  <node/>
     
   <!-- sound player -->
-  <node pkg="ros_mpg321_player" type="ros_mpg321_player" name="ros_mpg321_player" output="screen"/>
+  <node pkg="ros_mpg321_player" type="ros_mpg321_player" name="ros_mpg321_player" output="screen">
+    <param name="robot_id"                 value="1"/>
+  <node/>
 </launch>
