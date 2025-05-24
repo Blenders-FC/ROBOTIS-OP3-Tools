@@ -27,23 +27,25 @@ namespace robotis_op
 
 void QNodeOP3::init_default_demo(ros::NodeHandle &ros_node)
 {
-  init_gyro_pub_ = ros_node.advertise<robotis_controller_msgs::SyncWriteItem>("/robotis/sync_write_item", 0);
-  set_head_joint_angle_pub_ = ros_node.advertise<sensor_msgs::JointState>("/robotis/head_control/set_joint_states", 0);
+  int robot_id = 0;
+  ros_node.param<int>("robot_id", robot_id, 0);
+  init_gyro_pub_ = ros_node.advertise<robotis_controller_msgs::SyncWriteItem>("/robotis_" + std::to_string(robot_id) + "/sync_write_item", 0);
+  set_head_joint_angle_pub_ = ros_node.advertise<sensor_msgs::JointState>("/robotis_" + std::to_string(robot_id) + "/head_control/set_joint_states", 0);
 
-  current_joint_states_sub_ = ros_node.subscribe("/robotis/present_joint_states", 10,
+  current_joint_states_sub_ = ros_node.subscribe("/robotis_" + std::to_string(robot_id) + "/present_joint_states", 10,
                                                  &QNodeOP3::updateHeadJointStatesCallback, this);
 
   // Walking
-  set_walking_command_pub = ros_node.advertise<std_msgs::String>("/robotis/walking/command", 0);
-  set_walking_param_pub = ros_node.advertise<op3_walking_module_msgs::WalkingParam>("/robotis/walking/set_params", 0);
+  set_walking_command_pub = ros_node.advertise<std_msgs::String>("/robotis_" + std::to_string(robot_id) + "/walking/command", 0);
+  set_walking_param_pub = ros_node.advertise<op3_walking_module_msgs::WalkingParam>("/robotis_" + std::to_string(robot_id) + "/walking/set_params", 0);
   get_walking_param_client_ = ros_node.serviceClient<op3_walking_module_msgs::GetWalkingParam>(
-      "/robotis/walking/get_params");
+      "/robotis_" + std::to_string(robot_id) + "/walking/get_params");
 
   // Action
-  motion_index_pub_ = ros_node.advertise<std_msgs::Int32>("/robotis/action/page_num", 0);
+  motion_index_pub_ = ros_node.advertise<std_msgs::Int32>("/robotis_" + std::to_string(robot_id) + "/action/page_num", 0);
 
   // Demo
-  demo_command_pub_ = ros_node.advertise<std_msgs::String>("/robotis/demo_command", 0);
+  demo_command_pub_ = ros_node.advertise<std_msgs::String>("/robotis_" + std::to_string(robot_id) + "/demo_command", 0);
 
   std::string default_motion_path = ros::package::getPath(ROS_PACKAGE_NAME) + "/config/gui_motion.yaml";
   std::string motion_path = ros_node.param<std::string>("gui_motion", default_motion_path);

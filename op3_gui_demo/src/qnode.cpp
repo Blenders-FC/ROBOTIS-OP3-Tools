@@ -73,19 +73,21 @@ bool QNodeOP3::init()
   ros::start();  // explicitly needed since our nodehandle is going out of scope.
 
   ros::NodeHandle ros_node;
+  int robot_id = 0;
+  ros_node.param<int>("robot_id", robot_id, 0);
 
   // Add your ros communications here.
-  module_control_pub_ = ros_node.advertise<robotis_controller_msgs::JointCtrlModule>("/robotis/set_joint_ctrl_modules",
+  module_control_pub_ = ros_node.advertise<robotis_controller_msgs::JointCtrlModule>("/robotis_" + std::to_string(robot_id) + "/set_joint_ctrl_modules",
                                                                                      0);
-  module_control_preset_pub_ = ros_node.advertise<std_msgs::String>("/robotis/enable_ctrl_module", 0);
-  init_pose_pub_ = ros_node.advertise<std_msgs::String>("/robotis/base/ini_pose", 0);
+  module_control_preset_pub_ = ros_node.advertise<std_msgs::String>("/robotis_" + std::to_string(robot_id) + "/enable_ctrl_module", 0);
+  init_pose_pub_ = ros_node.advertise<std_msgs::String>("/robotis_" + std::to_string(robot_id) + "/base/ini_pose", 0);
 
-  status_msg_sub_ = ros_node.subscribe("/robotis/status", 10, &QNodeOP3::statusMsgCallback, this);
-  current_module_control_sub_ = ros_node.subscribe("/robotis/present_joint_ctrl_modules", 10,
+  status_msg_sub_ = ros_node.subscribe("/robotis_" + std::to_string(robot_id) + "/status", 10, &QNodeOP3::statusMsgCallback, this);
+  current_module_control_sub_ = ros_node.subscribe("/robotis_" + std::to_string(robot_id) + "/present_joint_ctrl_modules", 10,
                                                    &QNodeOP3::refreshCurrentJointControlCallback, this);
 
   get_module_control_client_ = ros_node.serviceClient<robotis_controller_msgs::GetJointModule>(
-      "/robotis/get_present_joint_ctrl_modules");
+      "/robotis_" + std::to_string(robot_id) + "/get_present_joint_ctrl_modules");
 
   // For default demo
   init_default_demo(ros_node);

@@ -27,20 +27,22 @@ namespace robotis_op
 
 void QNodeOP3::init_preview_walking(ros::NodeHandle &ros_node)
 {
+  int robot_id = 0;
+  ros_node.param<int>("robot_id", robot_id, 0);
   // preview walking
-  foot_step_command_pub_ = ros_node.advertise<op3_online_walking_module_msgs::FootStepCommand>("/robotis/online_walking/foot_step_command", 0);
-  walking_param_pub_ = ros_node.advertise<op3_online_walking_module_msgs::WalkingParam>("/robotis/online_walking/walking_param", 0);
+  foot_step_command_pub_ = ros_node.advertise<op3_online_walking_module_msgs::FootStepCommand>("/robotis_" + std::to_string(robot_id) + "/online_walking/foot_step_command", 0);
+  walking_param_pub_ = ros_node.advertise<op3_online_walking_module_msgs::WalkingParam>("/robotis_" + std::to_string(robot_id) + "/online_walking/walking_param", 0);
   set_walking_footsteps_pub_ = ros_node.advertise<op3_online_walking_module_msgs::Step2DArray>(
-        "/robotis/online_walking/footsteps_2d", 0);
+        "/robotis_" + std::to_string(robot_id) + "/online_walking/footsteps_2d", 0);
 
-  body_offset_pub_ = ros_node.advertise<geometry_msgs::Pose>("/robotis/online_walking/body_offset", 0);
-  foot_distance_pub_ = ros_node.advertise<std_msgs::Float64>("/robotis/online_walking/foot_distance", 0);
-  wholebody_balance_pub_ = ros_node.advertise<std_msgs::String>("/robotis/online_walking/wholebody_balance_msg", 0);
-  reset_body_msg_pub_ = ros_node.advertise<std_msgs::Bool>("/robotis/online_walking/reset_body", 0);
-  joint_pose_msg_pub_ = ros_node.advertise<op3_online_walking_module_msgs::JointPose>("/robotis/online_walking/goal_joint_pose", 0);
+  body_offset_pub_ = ros_node.advertise<geometry_msgs::Pose>("/robotis_" + std::to_string(robot_id) + "/online_walking/body_offset", 0);
+  foot_distance_pub_ = ros_node.advertise<std_msgs::Float64>("/robotis_" + std::to_string(robot_id) + "/online_walking/foot_distance", 0);
+  wholebody_balance_pub_ = ros_node.advertise<std_msgs::String>("/robotis_" + std::to_string(robot_id) + "/online_walking/wholebody_balance_msg", 0);
+  reset_body_msg_pub_ = ros_node.advertise<std_msgs::Bool>("/robotis_" + std::to_string(robot_id) + "/online_walking/reset_body", 0);
+  joint_pose_msg_pub_ = ros_node.advertise<op3_online_walking_module_msgs::JointPose>("/robotis_" + std::to_string(robot_id) + "/online_walking/goal_joint_pose", 0);
 
   humanoid_footstep_client_ = ros_node.serviceClient<humanoid_nav_msgs::PlanFootsteps>("plan_footsteps");
-  marker_pub_ = ros_node.advertise<visualization_msgs::MarkerArray>("/robotis/demo/foot_step_marker", 0);
+  marker_pub_ = ros_node.advertise<visualization_msgs::MarkerArray>("/robotis_" + std::to_string(robot_id) + "/demo/foot_step_marker", 0);
 
   // interacrive marker
   rviz_clicked_point_sub_ = ros_node.subscribe("clicked_point", 0, &QNodeOP3::pointStampedCallback, this);

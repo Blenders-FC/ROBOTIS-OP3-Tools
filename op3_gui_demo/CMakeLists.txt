@@ -26,6 +26,7 @@ find_package(catkin REQUIRED COMPONENTS
   op3_walking_module_msgs
   op3_online_walking_module_msgs
   humanoid_nav_msgs
+  tf
 )
 
 find_package(Eigen REQUIRED)
@@ -73,7 +74,7 @@ endif()
 catkin_package(
   INCLUDE_DIRS ${op3_gui_demo_INCLUDE_DIRECTORIES}
   LIBRARIES ${PROJECT_NAME}
-  CATKIN_DEPENDS rqt_gui  rqt_gui_cpp  roscpp  roslib  std_msgs  sensor_msgs  geometry_msgs  visualization_msgs  interactive_markers  cmake_modules  eigen_conversions  robotis_controller_msgs  op3_walking_module_msgs  op3_online_walking_module_msgs  humanoid_nav_msgs
+  CATKIN_DEPENDS rqt_gui  rqt_gui_cpp  roscpp  roslib  std_msgs  sensor_msgs  geometry_msgs  visualization_msgs  interactive_markers  cmake_modules  eigen_conversions  robotis_controller_msgs  op3_walking_module_msgs  op3_online_walking_module_msgs  humanoid_nav_msgs tf
 )
 #catkin_python_setup()
 

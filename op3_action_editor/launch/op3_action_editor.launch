@@ -11,10 +11,10 @@
   <!-- Action Editor -->
   <node pkg="op3_action_editor" type="op3_action_editor" name="op3_action_editor" output="screen">
     <param name="robot_id"                 value="1"/>
-  <node/>
+  </node>
     
   <!-- sound player -->
   <node pkg="ros_mpg321_player" type="ros_mpg321_player" name="ros_mpg321_player" output="screen">
     <param name="robot_id"                 value="1"/>
-  <node/>
+  </node>
 </launch>
