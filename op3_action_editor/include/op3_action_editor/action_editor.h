@@ -23,12 +23,10 @@
 #include <stdlib.h>
 #include <string>
 #include <unistd.h>
-#include <termios.h>
-#include <term.h>
 #include <fcntl.h>
-#include <ncurses.h>
 #include <pthread.h>
 #include <sys/wait.h>
+
 #include <ros/ros.h>
 #include <std_msgs/String.h>
 #include <yaml-cpp/yaml.h>
@@ -36,6 +34,10 @@
 #include "robotis_controller/robotis_controller.h"
 #include "op3_action_module/action_module.h"
 #include "op3_base_module/base_module.h"
+
+#include <termios.h>
+#include <term.h>
+#include <ncurses.h>
 
 #define ROBOT_NAME "OP3"
 
