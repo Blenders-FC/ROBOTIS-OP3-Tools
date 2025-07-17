@@ -1,8 +1,9 @@
 <?xml version="1.0" ?>
-<launch>    
+<launch>
+  <arg name="robot_id"                  default="$(env ROBOT_ID)"      doc="robot id [1, 2, 3, 4]"/>    
   <param name="gazebo"                   value="false"    type="bool"/>
   <param name="gazebo_robot_name"        value="robotis_humanoid"/>
-  <param name="robot_id"                 value="2"/>
+  <param name="robot_id"                 value="$(arg robot_id)"/>
   
   <param name="offset_table"             value="$(find op3_manager)/config/offset.yaml"/>
   <param name="robot_file_path"          value="$(find op3_manager)/config/OP3.robot"/>
@@ -10,11 +11,11 @@
     
   <!-- Action Editor -->
   <node pkg="op3_action_editor" type="op3_action_editor" name="op3_action_editor" output="screen">
-    <param name="robot_id"                 value="2"/>
+    <param name="robot_id"                 value="$(arg robot_id)"/>
   </node>
     
   <!-- sound player -->
   <node pkg="ros_mpg321_player" type="ros_mpg321_player" name="ros_mpg321_player" output="screen">
-    <param name="robot_id"                 value="2"/>
+    <param name="robot_id"                 value="$(arg robot_id)"/>
   </node>
 </launch>
